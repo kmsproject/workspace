@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.twitterquerymaker.MainActivity">
+    <item
+        android:id="@+id/menu_logical_and"
+        android:orderInCategory="100"
+        android:title="AND"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_logical_or"
+        android:orderInCategory="100"
+        android:title="OR"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_logical_NOT"
+        android:orderInCategory="100"
+        android:title="NOT"
+        app:showAsAction="never" />
+</menu>

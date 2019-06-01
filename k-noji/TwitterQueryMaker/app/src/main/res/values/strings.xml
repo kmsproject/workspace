@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">TwitterQueryMaker</string>
+    <string name="app_name_jp">Twitter 検索ワードメーカー</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_edit_hint">タイトルを入力</string>
+    <string name="title_button_save">保存</string>
+
+    <string name="logical_and_hint">AND検索</string>
+    <string name="logical_or_hint">OR検索</string>
+    <string name="logical_not_hint">NOT検索</string>
+
+    <string name="search_edit_hint">キーワードを入力</string>
+    <string name="search_checkbox_hint">完全一致</string>
+    <string name="search_add">キーワードを追加</string>
+
+    <string name="user_edit_hint">ユーザー名を入力</string>
+    <string name="user_radio_hint_first">ユーザーからのツイートに絞る</string>
+    <string name="user_radio_hint_second">ユーザーへのリプライに絞る</string>
+    <string name="user_add">ユーザーを追加</string>
+
+    <string name="place_toast_hint">まだ使えません</string>
+    <string name="place_add">場所を追加</string>
+
+    <string name="time_year">年</string>
+    <string name="time_month">月</string>
+    <string name="time_day">日</string>
+    <string name="time_from">から</string>
+    <string name="time_after">まで</string>
+    <string name="time_add">日付を追加</string>
+
+    <string name="lang_item_ja">日本語</string>
+    <string name="lang_item_en">英語</string>
+    <string name="lang_add">検索言語を追加</string>
+
+    <string name="filter_links">リンクが含まれるツイート</string>
+    <string name="filter_verify">認証されたアカウントのツイート</string>
+    <string name="filter_images">画像が含まれるツイート</string>
+    <string name="filter_video">動画が含まれるツイート</string>
+    <string name="filter_gif">Gif画像が含まれるツイート</string>
+    <string name="filter_media">メディアが含まれるツイート</string>
+    <string name="filter_news">ニュースだと思われるツイート</string>
+    <string name="filter_safe">センシティブではないツイート</string>
+    <string name="filter_retweet">以上リツイートされている</string>
+    <string name="filter_faves">以上ファボされている</string>
+    <string name="filter_reply">以上リプライがついている</string>
+    <string name="filter_add">フィルターを追加</string>
+
+
+</resources>
