@@ -17,6 +17,7 @@ public class SQLOpenHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "tqdb";
     private static final String _ID = "_id";
     private static final String COLUMN_NUMBER = "number";
+    private static final String COLUMN_CREATED = "created";
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_QUERY = "squery";
 
@@ -24,6 +25,7 @@ public class SQLOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     _ID + " INTEGER PRIMARY KEY," +
                     COLUMN_NUMBER + " INTEGER," +
+                    COLUMN_CREATED + " INTEGER," +
                     COLUMN_TITLE + " TEXT," +
                     COLUMN_QUERY + " TEXT)";
 
@@ -33,7 +35,6 @@ public class SQLOpenHelper extends SQLiteOpenHelper {
 
     SQLOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
     }
 
     @Override
@@ -46,7 +47,6 @@ public class SQLOpenHelper extends SQLiteOpenHelper {
         );
 
         Log.d(TAG, "onCreate(SQLiteDatabase db)");
-
     }
 
     @Override

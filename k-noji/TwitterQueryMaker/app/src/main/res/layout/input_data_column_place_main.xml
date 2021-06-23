@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:id="@+id/layout_time_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_weight="10"
+                android:gravity="center|left"
+                android:text="@string/place_point_hint"
+                android:textColor="@color/colorDeepGray"
+                android:textSize="12dp" />
+            <EditText
+                android:id="@+id/edit_text_place_point"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="100"
+                android:text="@string/place_point_text"
+                android:textColor="@color/colorDeepGray"
+                android:inputType="text"
+                android:textSize="12dp" />
+
+
+            <ImageView
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="10"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_close_black_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_weight="10"
+                android:gravity="center|left"
+                android:text="@string/place_radius_hint"
+                android:textColor="@color/colorDeepGray"
+                android:textSize="12dp" />
+            <EditText
+                android:id="@+id/edit_text_place_radius"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="100"
+                android:text="@string/place_radius_value"
+                android:textColor="@color/colorDeepGray"
+                android:inputType="text"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

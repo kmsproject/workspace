@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/defaultMassage"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:src="@drawable/ic_search_gray_96dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="@string/default_massage"
+        android:textColor="@color/colorLightGray"
+        android:textSize="16dp" >
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+    </TextView>
+
+
+</LinearLayout>
