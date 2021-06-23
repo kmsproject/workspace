@@ -64,6 +64,7 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
     private LinearLayout timeLinearLayout;
     private LinearLayout langLinearLayout;
     private LinearLayout filterLinearLayout;
+    private RelativeLayout placeAddView;
     private RelativeLayout timeAddView;
     private RelativeLayout langAddView;
     private RelativeLayout filterAddView;
@@ -105,7 +106,7 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
         // 各Adderの取得
         RelativeLayout searchAddView = (RelativeLayout) findViewById(R.id.layout_search_adder);
         RelativeLayout userAddView   = (RelativeLayout) findViewById(R.id.layout_user_adder);
-        RelativeLayout placeAddView  = (RelativeLayout) findViewById(R.id.layout_place_adder);
+        placeAddView  = (RelativeLayout) findViewById(R.id.layout_place_adder);
         timeAddView   = (RelativeLayout) findViewById(R.id.layout_time_adder);
         langAddView   = (RelativeLayout) findViewById(R.id.layout_lang_adder);
         filterAddView = (RelativeLayout) findViewById(R.id.layout_filter_adder);
@@ -201,7 +202,26 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.layout_place_adder:
-                Toast.makeText(this, getString(R.string.place_toast_hint), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick : R.id.layout_place_adder");
+
+                // Resource取得
+                final RelativeLayout layoutPlaceMain = (RelativeLayout)getLayoutInflater().inflate(R.layout.input_data_column_place_main, null);
+                placeLinearLayout.addView(layoutPlaceMain);
+                EditText editTextPoint = layoutPlaceMain.findViewById(R.id.edit_text_place_point);
+                EditText editTextRadius = layoutPlaceMain.findViewById(R.id.edit_text_place_radius);
+                cancelButton = layoutPlaceMain.findViewById(R.id.cancel);
+                // Adderレイアウトを隠す
+                placeAddView.setVisibility(View.GONE);
+                // Tagの設定
+                layoutPlaceMain.setId(newId);
+                relativeLayoutTags = new RelativeLayoutTags(createLayoutTagId(), resourceTypeItem[2], layoutPlaceMain);
+                layoutPlaceMain.setTag(relativeLayoutTags);
+                tagsList.add(relativeLayoutTags);
+
+                // Listenerの設定
+                setEditTextListener(editTextPoint);
+                setEditTextListener(editTextRadius);
+                setCancelButtonListener(cancelButton, layoutPlaceMain);
                 break;
 
             case R.id.layout_time_adder:
@@ -239,7 +259,6 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
                 setDataPickerDialogListener(textViewFrom);
                 setDataPickerDialogListener(textViewAfter);
                 setCancelButtonListener(cancelButton, layoutTimeMain);
-
                 break;
 
             case R.id.layout_lang_adder:
@@ -266,7 +285,6 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
                 // Listenerの設定
                 setLanguageListener(textViewLang);
                 setCancelButtonListener(cancelButton, layoutLangMain);
-
                 break;
 
             case R.id.layout_filter_adder:
@@ -391,7 +409,9 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
                 relativeLayout.removeAllViews();
                 RelativeLayoutTags tmp = (RelativeLayoutTags)relativeLayout.getTag();
                 tmp.setIsVisible(false);
-                if (tmp.getmType().equals(resourceTypeItem[3])) {
+                if (tmp.getmType().equals(resourceTypeItem[2])) {
+                    placeAddView.setVisibility(View.VISIBLE);
+                } else if (tmp.getmType().equals(resourceTypeItem[3])) {
                     timeAddView.setVisibility(View.VISIBLE);
                 } else if (tmp.getmType().equals(resourceTypeItem[4])) {
                     langAddView.setVisibility(View.VISIBLE);
@@ -459,13 +479,18 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    /**
+     * 検索クエリの作成
+     * @return
+     */
     private String createQueryStrings() {
         Log.d(TAG, "createQueryStrings()");
-        // 言語、キーワード、ユーザー、日付、フィルターの順番
+        // 言語、キーワード、ユーザー、日付、場所、フィルターの順番
         String qLang = "";
         String qKeyword = "";
         String qUser = "";
         String qDay = "";
+        String qPlace = "";
         String qFilter = "";
 
 
@@ -515,6 +540,18 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
                     qUser = qUser + tmp;
 
                 } else if (relativeLayoutTags.getmType().equals(resourceTypeItem[2])) {
+                    // リソース取得
+                    RelativeLayout layoutPlaceMain = relativeLayoutTags.getmRelativeLayout();
+                    EditText editTextPoint = layoutPlaceMain.findViewById(R.id.edit_text_place_point);
+                    EditText editTextRadius = layoutPlaceMain.findViewById(R.id.edit_text_place_radius);
+
+                    // 文字列作成
+                    tmp = "%20near%3A" + editTextPoint.getText().toString() + "%20within%3A"
+                            + editTextRadius.getText().toString() + "km";
+
+                    // 結合
+                    qPlace = tmp;
+
                 } else if (relativeLayoutTags.getmType().equals(resourceTypeItem[3])) {
                     // リソース取得
                     RelativeLayout layoutTimeMain = relativeLayoutTags.getmRelativeLayout();
@@ -609,44 +646,45 @@ public class CreateQueryActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         }
-        String result = "https://twitter.com/search?" + qLang + "q=" + qKeyword + qUser + qDay + qFilter;
+        String result = "https://twitter.com/search?" + qLang + "q=" + qKeyword + qUser + qDay + qPlace + qFilter;
         Log.d(TAG, "Result string :" + result);
         return result;
     }
 
+    // 無効文字の置き換え
     private String replaceString(String s) {
         if (s == null) {
             return null;
         }
-        s.replace(" ", "%20");
-        //s.replace("!", "%21");
-        //s.replace(""", "%22");
-        s.replace("#", "%23");
-        s.replace("$", "%24");
-        s.replace("%", "%25");
-        s.replace("&", "%26");
-        s.replace("'", "%27");
-        //s.replace("(", "%28");
-        //s.replace(")", "%29");
-        //s.replace("*", "%2A");
-        //s.replace("+", "%2B");
-        s.replace(",", "%2C");
-        s.replace("/", "%2F");
-        s.replace(":", "%3A");
-        s.replace(";", "%3B");
-        //s.replace("<", "%3C");
-        //s.replace("=", "%3D");
-        //s.replace(">", "%3E");
-        //s.replace("?", "%3F");
-        s.replace("@", "%40");
-        s.replace("[", "%5B");
-        s.replace("]", "%5D");
-        s.replace("^", "%5E");
-        s.replace("`", "%60");
-        s.replace("{", "%7B");
-        s.replace("|", "%7C");
-        s.replace("}", "%7D");
-        //s.replace("~", "%7E");
+        s = s.replace(" ", "%20");
+        //str = s.replace("!", "%21");
+        //str = s.replace(""", "%22");
+        s = s.replace("#", "%23");
+        s = s.replace("$", "%24");
+        s = s.replace("%", "%25");
+        s = s.replace("&", "%26");
+        s = s.replace("'", "%27");
+        //s = s.replace("(", "%28");
+        //s = s.replace(")", "%29");
+        //s = s.replace("*", "%2A");
+        //s = s.replace("+", "%2B");
+        s = s.replace(",", "%2C");
+        s = s.replace("/", "%2F");
+        s = s.replace(":", "%3A");
+        s = s.replace(";", "%3B");
+        //str = s.replace("<", "%3C");
+        //str = s.replace("=", "%3D");
+        //str = s.replace(">", "%3E");
+        //str = s.replace("?", "%3F");
+        s = s.replace("@", "%40");
+        s = s.replace("[", "%5B");
+        s = s.replace("]", "%5D");
+        s = s.replace("^", "%5E");
+        s = s.replace("`", "%60");
+        s = s.replace("{", "%7B");
+        s = s.replace("|", "%7C");
+        s = s.replace("}", "%7D");
+        //str = s.replace("~", "%7E");
         return s;
     }
 
